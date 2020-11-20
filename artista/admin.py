@@ -6,4 +6,5 @@ class AdminArtista(admin.ModelAdmin):
 	list_display = ('id','nombre','nombreArtistico')
 	search_fields = ('nombreArtistico',)
 
+
 admin.site.register(Artista, AdminArtista)
