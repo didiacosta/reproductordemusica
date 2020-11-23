@@ -3,8 +3,8 @@ from .models import Cancion
 
 # Register your models here.
 class AdminCancion(admin.ModelAdmin):
-	list_display = ('id','nombre','album_id','caratula')
+	list_display = ('id','nombre','album','archivo')
 	search_fields = ('nombre',)
-	list_filter = ('album_id','nombre','caratula',)
+	list_filter = ('album',)
 
 admin.site.register(Cancion, AdminCancion)

@@ -83,17 +83,29 @@ WSGI_APPLICATION = 'reproductordemusica.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+#     'default' : {
+#         'ENGINE': 'sql_server.',
+#         'NAME': 'reproductordemusica',        
+#         'USER': 'root',        
+#         'PASSWORD': '',           
+#         'HOST': '127.0.0.1',
+#         'PORT': '3306',        
+#          'OPTIONS' : {
+#              'driver': 'ODBC Driver 13 for SQL Server',                    
+#         # }     
+#     }
+# }
 DATABASES = {
     'default' : {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'reproductordemusica',        
-        'USER': 'root',        
-        'PASSWORD': '',           
-        'HOST': '127.0.0.1',
-        'PORT': '3306',        
-        # 'OPTIONS' : {
-        #     'driver': 'ODBC Driver 13 for SQL Server',                    
-        # }     
+        'ENGINE': 'sql_server.pyodbc',
+        'NAME': 'reproductordemusica',
+        'USER': 'johan_samper',
+        'PASSWORD': 'admin',
+        'HOST': 'LAPTOP-864HAT83\\SQLEXPRESS',   
+        'OPTIONS' : {
+            'driver': 'ODBC Driver 13 for SQL Server',
+        }     
     }
 }
 
