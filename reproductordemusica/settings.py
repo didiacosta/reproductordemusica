@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'artista',
     'cancion',
     'album',
@@ -96,18 +97,35 @@ WSGI_APPLICATION = 'reproductordemusica.wsgi.application'
 #         # }     
 #     }
 # }
+
+#Johan:
+# DATABASES = {
+#     'default' : {
+#         'ENGINE': 'sql_server.pyodbc',
+#         'NAME': 'reproductordemusica',
+#         'USER': 'johan_samper',
+#         'PASSWORD': 'admin',
+#         'HOST': 'LAPTOP-864HAT83\\SQLEXPRESS',   
+#         'OPTIONS' : {
+#             'driver': 'ODBC Driver 13 for SQL Server',
+#         }     
+#     }
+# }
+
+#Didi:
 DATABASES = {
     'default' : {
         'ENGINE': 'sql_server.pyodbc',
         'NAME': 'reproductordemusica',
-        'USER': 'johan_samper',
-        'PASSWORD': 'admin',
-        'HOST': 'LAPTOP-864HAT83\\SQLEXPRESS',   
+        'USER': 'conecta_sinin',
+        'PASSWORD': 'santi10',
+        'HOST': 'LAPTOP-4QS42EG5\\SQLEXPRESS',   
         'OPTIONS' : {
             'driver': 'ODBC Driver 13 for SQL Server',
         }     
     }
 }
+
 
 
 # Password validation
@@ -147,3 +165,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+    ),
+    'PAGE_SIZE': 10,
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+}
