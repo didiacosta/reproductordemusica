@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'artista',
+    'cancion',
+    'album',
 ]
 
 MIDDLEWARE = [
@@ -81,13 +83,26 @@ WSGI_APPLICATION = 'reproductordemusica.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+#     'default' : {
+#         'ENGINE': 'sql_server.',
+#         'NAME': 'reproductordemusica',        
+#         'USER': 'root',        
+#         'PASSWORD': '',           
+#         'HOST': '127.0.0.1',
+#         'PORT': '3306',        
+#          'OPTIONS' : {
+#              'driver': 'ODBC Driver 13 for SQL Server',                    
+#         # }     
+#     }
+# }
 DATABASES = {
     'default' : {
         'ENGINE': 'sql_server.pyodbc',
         'NAME': 'reproductordemusica',
-        'USER': 'conecta_sinin',
-        'PASSWORD': 'santi10',
-        'HOST': 'LAPTOP-4QS42EG5\\SQLEXPRESS',   
+        'USER': 'johan_samper',
+        'PASSWORD': 'admin',
+        'HOST': 'LAPTOP-864HAT83\\SQLEXPRESS',   
         'OPTIONS' : {
             'driver': 'ODBC Driver 13 for SQL Server',
         }     
