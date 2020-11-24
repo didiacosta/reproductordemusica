@@ -19,13 +19,17 @@ from rest_framework import routers
 
 #views:
 from artista.views import ArtistaViewSet
+from album.views import AlbumViewSet
+from cancion.views import CancionViewSet
 
 router =  routers.DefaultRouter()
 
 router.register(r'artista', ArtistaViewSet)
+router.register(r'album', AlbumViewSet)
+router.register(r'cancion', CancionViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-    path('api/',include(router.urls)),
+    path('api/', include(router.urls)),
 ]
