@@ -1,0 +1,97 @@
+{
+   "consecutive":"44",
+   "consecutivo":"990000044",
+   "BillingReference":[    
+      {
+         "id":"SETP990000046",
+         "cufe":"184b6f43759c12b5a9410b25f3464467f1fd67765572555771e983f626eb98b1df6be0ae3c5740738ec72302a1093383",
+         "issueDate":"2020-10-08"
+      }
+   ],
+   "CompanyData":[
+      {
+         "companyNIT":"901004159",
+         "companyNITDV":"9",
+         "CompanyName":"Mbo Ingenieria De Software Sas",
+         "CompanyAddress":"Av. #97 - 13",
+         "CompanyCity":"Bogotá, D.c.",
+         "CompanyDepto":"Bogotá",
+         "companyEmail":"pruebas@gmail.com",
+         "CompanyDeptoCode":"11",
+         "cityCode":"11001",
+         "TLClistName":"04",
+         "TaxLevelCode":"O-23"
+      }
+   ],
+   "ProfileExecutionID":"2",
+   "CustomerData":[
+      {
+         "CustomerName":"Nombre Tienda",
+         "CustomerCity":"Bogotá, D.c.",
+         "CustomerDepto":"Bogotá",
+         "CustomerAddress":"Av. #97 - 13",
+         "CustomerNit":"800197268",
+         "CustomerEmail":"pruebas@gmail.com",
+         "CustomerCityCode":"11001",
+         "CustomerDeptoCode":"11",
+         "CustomerIdCode":"31",
+         "AdditionalAccountID":"2",
+         "CustomerDV":""
+      }
+   ],   
+   "ProductsData":[
+      {                  
+         "IVA":[
+            {
+               "LineQty":"1.00",
+               "TaxableAmount":"12600.06",
+               "LineTotal":"12600.06",             
+               "TaxSchemeId":"01",
+               "TaxSchemeName":"IVA",
+               "LineTaxPercentage":"19.00",
+               "ChargesData":[
+                  {
+                     "ChargeIndicator":"false",
+                     "AllowancePercentage":"33.33",         
+                     "LineBaseAmount":"18900.00"
+                  }
+            ],               
+               "LineItemName":"Producto Software 2",
+               "itemID":"11113"                                
+            },
+            {
+               "LineQty":"1.00",
+               "TaxableAmount":"13000.00",
+               "LineTotal":"13000.00",             
+               "TaxSchemeId":"01",
+               "TaxSchemeName":"IVA",
+               "LineTaxPercentage":"19.00",
+               "LineItemName":"Producto Software 3",
+               "itemID":"111111"                               
+            },
+            {
+               "LineQty":"1.00",
+               "TaxableAmount":"15000.00",
+               "LineTotal":"15000.00",             
+               "TaxSchemeId":"01",
+               "TaxSchemeName":"IVA",
+               "LineTaxPercentage":"19.00",
+               "LineItemName":"Producto Software 4",
+               "itemID":"11111112"                               
+            }                       
+         ],         
+         "ICA":[
+            {}
+         ],         
+         "INC":[
+            {}
+         ]
+      }                  
+   ],
+   "PaymentData":[
+      {
+         "PaymentMeansID":"1",
+         "PaymentMeansCode":"10"         
+      }
+   ]
+}

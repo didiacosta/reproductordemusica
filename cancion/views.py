@@ -16,7 +16,7 @@ from .models import Cancion
 
 class CancionViewSet(viewsets.ModelViewSet):
 	model = Cancion
-	queryset = Cancion.objects.all()
+	queryset = model.objects.all()
 	serializer_class = CancionSerializer
 
 	def retrieve(self,request,*args, **kwargs):
@@ -68,7 +68,7 @@ class CancionViewSet(viewsets.ModelViewSet):
 				status=status.HTTP_404_NOT_FOUND)
 
 	def create(self, request, *args, **kwargs):
-		pass
+		pass	
 
 	def update(self,request,*args,**kwargs):
 		pass
