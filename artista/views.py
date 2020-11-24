@@ -68,10 +68,47 @@ class ArtistaViewSet(viewsets.ModelViewSet):
 				status=status.HTTP_404_NOT_FOUND)
 
 	def create(self, request, *args, **kwargs):
-		pass
+		if request.method == 'POST':
+			try:
+				serializer = ArtistaSerializer(data = request.data, context ={'request':request})
+				if serializer.is_valid():
+					serializer.save()
+
+					return Response({'message':'El registro ha sido guardado exitosamente','success':'ok',
+						'data':serializer.data},status=status.HTTP_201_CREATED)
+				else:
+					return Response({'message':'datos requeridos no fueron recibidos','success':'fail',
+					'data':''},status=status.HTTP_400_BAD_REQUEST)
+
+			except Exception as e:
+				print(e)
+				return Response({
+					'message':'Se presentaron errores de comunicacion',
+					'success':'fail',
+					'data':''},
+					status=status.HTTP_404_NOT_FOUND)
 
 	def update(self,request,*args,**kwargs):
-		pass
+		if request.method == 'PUT':
+			try:
+				partial = kwargs.pop('partial', False)
+				instance = self.get_object()				
+				serializer = ArtistaSerializer(instance,data=request.data,context={'request': request},partial=partial)
+				if serializer.is_valid():
+					serializer.save()
+					return Response({'message':'El registro ha sido actualizado exitosamente','success':'ok',
+						'data':serializer.data},status=status.HTTP_201_CREATED)
+				else:
+					return Response({'message':'datos requeridos no fueron recibidos','success':'fail','data':''},status=status.HTTP_400_BAD_REQUEST)					
+			except Exception as e:
+				print(e)
+				return Response({'message':'Se presentaron errores de comunicacion','success':'fail','data':''},status=status.HTTP_404_NOT_FOUND)
 
 	def destroy(self,request,*args,**kwargs):
-		pass
+		try:
+			instance = self.get_object()
+			self.perform_destroy(instance)
+			return Response({'message':'El registro ha sido eliminado exitosamente','success':'ok'},status=status.HTTP_201_CREATED)			
+		except Exception as e:
+			#print(e)
+			return Response({'message':'Se presentaron errores de comunicacion','success':'fail','data':''},status=status.HTTP_404_NOT_FOUND)
