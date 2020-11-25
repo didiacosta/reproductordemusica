@@ -32,18 +32,23 @@ class CancionViewSet(viewsets.ModelViewSet):
 				},
 				status=status.HTTP_404_NOT_FOUND)
 
-
 	def list(self, request, *args, **kwargs):
 		#import pdb; pdb.set_trace()
 		try:
 			queryset = super(CancionViewSet, self).get_queryset()
 			dato = self.request.query_params.get('dato', None)
 			sin_paginacion = self.request.query_params.get('sin_paginacion', None)
+			album = self.request.query_params.get('album', None)
+			nombreAlbum = self.request.query_params.get('nombreAlbum', None)
 
 			qset = (~Q(id=0))
 			if dato:
 				qset = qset & (Q(nombre__icontains=dato) or Q(album_id__icontains=dato))
-
+			if album:
+				qset = qset & (Q(album__id=album))
+			if nombreAlbum:
+				qset = qset & (Q(album__nombre__icontains=nombreAlbum))	
+						
 			queryset = self.model.objects.filter(qset)
 
 			if sin_paginacion is None:
@@ -68,10 +73,47 @@ class CancionViewSet(viewsets.ModelViewSet):
 				status=status.HTTP_404_NOT_FOUND)
 
 	def create(self, request, *args, **kwargs):
-		pass	
+		if request.method == 'POST':
+			try:
+				serializer = CancionSerializer(data = request.data, context ={'request':request})
+				if serializer.is_valid():
+					serializer.save(album_id=request.data['album_id'])
+
+					return Response({'message':'El registro ha sido guardado exitosamente','success':'ok',
+						'data':serializer.data},status=status.HTTP_201_CREATED)
+				else:
+					return Response({'message':'datos requeridos no fueron recibidos','success':'fail',
+					'data':''},status=status.HTTP_400_BAD_REQUEST)
+
+			except Exception as e:
+				#print(e)
+				return Response({
+					'message':'Se presentaron errores de comunicacion',
+					'success':'fail',
+					'data':''},
+					status=status.HTTP_404_NOT_FOUND)
 
 	def update(self,request,*args,**kwargs):
-		pass
+		if request.method == 'PUT':
+			try:
+				partial = kwargs.pop('partial', False)
+				instance = self.get_object()				
+				serializer = CancionSerializer(instance,data=request.data,context={'request': request},partial=partial)
+				if serializer.is_valid():
+					serializer.save(album_id=instance.album.id)
+					return Response({'message':'El registro ha sido actualizado exitosamente','success':'ok',
+						'data':serializer.data},status=status.HTTP_201_CREATED)
+				else:
+					return Response({'message':'datos requeridos no fueron recibidos','success':'fail','data':''},status=status.HTTP_400_BAD_REQUEST)					
+			except Exception as e:
+				print(e)
+				return Response({'message':'Se presentaron errores de comunicacion','success':'fail','data':''},status=status.HTTP_404_NOT_FOUND)
 
 	def destroy(self,request,*args,**kwargs):
-		pass
+		try:
+			instance = self.get_object()
+			self.perform_destroy(instance)
+			return Response({'message':'El registro ha sido eliminado exitosamente','success':'ok'},status=status.HTTP_201_CREATED)			
+		except Exception as e:
+			#print(e)
+			return Response({'message':'Se presentaron errores de comunicacion','success':'fail','data':''},status=status.HTTP_404_NOT_FOUND)

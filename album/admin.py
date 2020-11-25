@@ -5,6 +5,6 @@ from .models import Album
 class AdminAlbum(admin.ModelAdmin):
     list_display = ('id','nombre','artista','caratula')
     search_fields = ('nombre',)
-    list_filter = ('artista','nombre','caratula',)    
+    list_filter = ('artista',)    
 
 admin.site.register(Album, AdminAlbum)
