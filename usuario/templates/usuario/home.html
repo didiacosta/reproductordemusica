@@ -1,47 +1,18 @@
-{% extends 'styles.html' %}
+{% extends 'masterpage.html' %}
 {% load staticfiles %}
 
+{% block busqueda %}
+{% endblock%}
 
 {% block contenido %}	
-<style>
-.abs-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-}	
-</style>
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>		
-		<a class="navbar-brand" href="#">
-			<img src="{% static 'images/logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
-			RM
-		</a>
-
-		<div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-			<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-				<li class="nav-item">
-					<a class="nav-link" href="#">Home</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Link</a>
-				</li>
-			</ul>
-			<ul>
-				<li><a href="{% url 'usuario.logout' %}">Cerrar sesión</a></li>
-			</ul>		
-		</div>
-	</nav>
-    <div class="container-fluid"> 
+ 
 		<div class="abs-center">
 			<div class="row">
 					<div class="col-sm-12 d-flex justify-content-center">
-						<h1 class="text-center" style="color:white">Bienvendio a RM, {{username}}</h1>
+						<h1 class="text-center" style="color:blue">Bienvendio a RM, {{user.username}}</h1>
 				</div>
 			</div>
 		</div>
 
-    </div>	
+
 {% endblock contenido %}
