@@ -35,7 +35,8 @@ def logout_view(request):
 	return redirect(reverse('usuario.login'))
 
 def home_view(request):
+	username = request.user.username
 	if request.user.is_authenticated:
-		return render(request,'usuario/home.html',{}) 
+		return render(request,'usuario/home.html',{'username':username.capitalize()}) 
 	else:
 		return render(request,'usuario/login.html',{}) 

@@ -29,7 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'),)
+#TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'),)
 
 # Application definition
 
@@ -62,7 +62,7 @@ ROOT_URLCONF = 'reproductordemusica.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -103,32 +103,32 @@ WSGI_APPLICATION = 'reproductordemusica.wsgi.application'
 # }
 
 #Johan:
-# DATABASES = {
-#     'default' : {
-#         'ENGINE': 'sql_server.pyodbc',
-#         'NAME': 'reproductordemusica',
-#         'USER': 'johan_samper',
-#         'PASSWORD': 'admin',
-#         'HOST': 'LAPTOP-864HAT83\\SQLEXPRESS',   
-#         'OPTIONS' : {
-#             'driver': 'ODBC Driver 13 for SQL Server',
-#         }     
-#     }
-# }
-
-#Didi:
 DATABASES = {
     'default' : {
         'ENGINE': 'sql_server.pyodbc',
         'NAME': 'reproductordemusica',
-        'USER': 'conecta_sinin',
-        'PASSWORD': 'santi10',
-        'HOST': 'LAPTOP-4QS42EG5\\SQLEXPRESS',   
+        'USER': 'johan_samper',
+        'PASSWORD': 'admin',
+        'HOST': 'LAPTOP-864HAT83\\SQLEXPRESS',   
         'OPTIONS' : {
             'driver': 'ODBC Driver 13 for SQL Server',
         }     
     }
 }
+
+#Didi:
+# DATABASES = {
+#     'default' : {
+#         'ENGINE': 'sql_server.pyodbc',
+#         'NAME': 'reproductordemusica',
+#         'USER': 'conecta_sinin',
+#         'PASSWORD': 'santi10',
+#         'HOST': 'LAPTOP-4QS42EG5\\SQLEXPRESS',   
+#         'OPTIONS' : {
+#             'driver': 'ODBC Driver 13 for SQL Server',
+#         }     
+#     }
+# }
 
 
 
