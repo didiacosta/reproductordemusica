@@ -14,7 +14,41 @@
                 <h6 class="m-0 font-weight-bold text-primary">Listado de artistas</h6>
             </div>
             <div class="card-body">
-            	listado....
+            	<div data-bind="html: mensaje"></div>
+            	<div class="col-lg-12" data-bind="visible:(listado()!=null && listado().length > 0)">
+            		<div class="table-responsive">
+            			<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            				<thead>
+            					<tr>
+            						<th>id</th>
+            						<th>Nombre</th>
+            						<th>Nombre artistico</th>
+            					</tr>
+            				</thead>
+            				<tbody>
+            					<!--ko foreach:{ data:listado, as:'item'} -->
+            						<tr>
+            							<td data-bind="text: item.id"></td>
+            							<td data-bind="text: item.nombre"></td>
+            							<td data-bind="text: item.nombreArtistico"></td>
+            						</tr>
+            					<!--/ko-->
+            				</tbody>
+            			</table>
+            		</div>
+            		<div id="paginacion" >
+                    <div data-bind="pagination: {
+                                   currentPage: paginacion.pagina_actual,
+                                   totalCount: paginacion.total,
+                                   pageSize:paginacion.cantidad_por_paginas,
+                                   maxPages: paginacion.maxPaginas,
+                                   directions: paginacion.direcciones,
+                                   boundary: paginacion.limite,
+                                   text: paginacion.text }">
+
+                    </div>
+                  </div>
+            	</div>
             </div>
 		</div>
 	</div>
@@ -23,4 +57,9 @@
 
 {% block imports %}
 	<script type="text/javascript" src='{% static "js/ViewModels/artista/artista.js" %}'></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			artista.consultar(1);
+		});
+	</script>
 {% endblock %}

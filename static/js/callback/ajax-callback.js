@@ -1,6 +1,6 @@
 ﻿var mensajeNoFound = '<div class="alert alert-warning alert-dismissable"><i class="fa fa-warning"></i>No se encontraron registros</div>';
 var mensajeInformativoBusuqeda = '<div class="alert alert-info alert-dismissable"><i class="fa fa-info pr10"></i> No se han seleccionado parametros de busqueda.</div>';
-var resultadosPorPagina = 20;
+var resultadosPorPagina = 10;
 //var path_principal='http://52.42.43.115:8000';// la ruta del servidor
 //var path_principal = 'http://localhost:8000'; // la ruta del servidor
 var path_principal = ''; // se deja vacia esta variable para poder trabajr en el local y el servidor
@@ -118,7 +118,7 @@ function RequestGet(callback, path, parameter, completado, cerrarLoading, abrirL
         url: path,
         type: 'GET',
         dataType: "JSON",
-        headers: { 'Authorization': 'Bearer ' + token },
+        //headers: { 'Authorization': 'Bearer ' + token },
         beforeSend: function(xhr) {
             if (abrirLoading == undefined || abrirLoading == true)
                 $('#loading').show();
