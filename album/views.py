@@ -6,6 +6,7 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
 #serializers:
 from .serializers import AlbumSerializer
@@ -126,5 +127,6 @@ class AlbumViewSet(viewsets.ModelViewSet):
 			#print(e)
 			return Response({'message':'Se presentaron errores de comunicacion','success':'fail','data':''},status=status.HTTP_404_NOT_FOUND)
 
+@login_required
 def home_view(request):
 	return render(request, 'album/home.html', {})	
