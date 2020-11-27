@@ -28,7 +28,7 @@ def login_view(request):
 				# el usuario no existe
 				mensaje = 'no se encontro un usuario con el nombre ' + username
 
-	return render(request, 'usuario/login.html', {'mensaje': mensaje})
+	return render(request, 'usuario/login2.html', {'mensaje': mensaje})
 
 def logout_view(request):
 	logout(request)
@@ -39,4 +39,4 @@ def home_view(request):
 	if request.user.is_authenticated:
 		return render(request,'usuario/home.html',{'username':username.capitalize()}) 
 	else:
-		return render(request,'usuario/login.html',{}) 
+		return render(request,'usuario/login2.html',{}) 

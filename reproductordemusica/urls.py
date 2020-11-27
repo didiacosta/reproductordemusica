@@ -36,4 +36,6 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('usuario/', include('usuario.urls')),
     path('artista/', include('artista.urls')),
+    path('cancion/', include('cancion.urls')),
+    path('album/', include('album.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

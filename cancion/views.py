@@ -117,3 +117,6 @@ class CancionViewSet(viewsets.ModelViewSet):
 		except Exception as e:
 			#print(e)
 			return Response({'message':'Se presentaron errores de comunicacion','success':'fail','data':''},status=status.HTTP_404_NOT_FOUND)
+
+def home_view(request):
+	return render(request, 'cancion/home.html', {})			
