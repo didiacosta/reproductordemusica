@@ -1,20 +1,90 @@
 {% extends 'masterpage.html' %}
 {% load staticfiles %}
-
 {% block titulo %}
 	Cancion
 {% endblock %} 
-
+{% block estilos %}
+<style>
+	audio:hover, audio:focus, audio:active{
+		-webkit-box-shadow: 15px 15px 20px rgba(0,0, 0, 0.4);
+		-moz-box-shadow: 15px 15px 20px rgba(0,0, 0, 0.4);
+		box-shadow: 15px 15px 20px rgba(0,0, 0, 0.4);
+		-webkit-transform: scale(1.05);
+		-moz-transform: scale(1.05);
+		transform: scale(1.05);
+	}	
+	audio{
+		background: #e74a3b;		
+		-webkit-transition:all 0.5s linear;
+		-moz-transition:all 0.5s linear;
+		-o-transition:all 0.5s linear;
+		transition:all 0.5s linear;
+		-moz-box-shadow: 2px 2px 4px 0px #006773;
+		-webkit-box-shadow:  2px 2px 4px 0px #006773;
+		box-shadow: 2px 2px 4px 0px #006773;
+		-moz-border-radius:7px 7px 7px 7px ;
+		-webkit-border-radius:7px 7px 7px 7px ;
+		border-radius:7px 7px 7px 7px ;
+	}
+	.table td{
+		vertical-align: middle;
+	}
+</style>
+{% endblock %}   
 {% block contenido %}	
 		
 <div class="row">
 	<div class="col-lg-12">
 		<div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Listado de canciones</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Listado de Cancion</h6>
             </div>
             <div class="card-body">
-            	listado....
+            	<div data-bind="html: mensaje"></div>
+            	<div class="col-lg-12" data-bind="visible:(listado()!=null && listado().length > 0)">
+            		<div class="table-responsive ">
+            			<table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+            				<thead class="bg-danger text-white text-center">
+            					<tr>
+									<th class="font-weight-bold">id</th>
+									<th class="font-weight-bold">Artista</th>
+									<th class="font-weight-bold">Album</th>
+            						<th class="font-weight-bold">Nombre Cancion</th>									
+									<th class="font-weight-bold">Caratula</th>
+									<th class="font-weight-bold">Cancion</th>
+            					</tr>
+            				</thead>
+            				<tbody>
+            					<!--ko foreach:{ data:listado, as:'item'} -->
+            						<tr class="text-center">
+            							<td data-bind="text: item.id" class="font-weight-bold" style="color:black"></td>
+            							<td data-bind="text: item.album.artista.nombre" style="color:black"></td>
+										<td data-bind="text: item.album.nombre" style="color:black"></td>
+										<td data-bind="text: item.nombre" style="color:black"></td>
+										<td><img data-bind="attr:{src: item.album.caratula}" class="img-thumbnail img-fluid" width="100"></td>
+										<td>
+											<audio data-bind="attr:{src: item.archivo}" controls>
+												<p>Tu navegador no implementa el elemento audio</p>
+											</audio>
+										</td>
+            						</tr>
+            					<!--/ko-->
+            				</tbody>
+            			</table>
+            		</div>
+            		<div id="paginacion" >
+                    <div data-bind="pagination: {
+                                   currentPage: paginacion.pagina_actual,
+                                   totalCount: paginacion.total,
+                                   pageSize:paginacion.cantidad_por_paginas,
+                                   maxPages: paginacion.maxPaginas,
+                                   directions: paginacion.direcciones,
+                                   boundary: paginacion.limite,
+                                   text: paginacion.text }">
+
+                    </div>
+                  </div>
+            	</div>
             </div>
 		</div>
 	</div>
@@ -22,5 +92,10 @@
 {% endblock contenido %}
 
 {% block imports %}
-	<script type="text/javascript" src='{% static "js/ViewModels/artista/artista.js" %}'></script>
+	<script type="text/javascript" src='{% static "js/ViewModels/cancion/cancion.js" %}'></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			cancion.consultar(1);
+		});
+	</script>
 {% endblock %}
