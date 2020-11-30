@@ -13,8 +13,8 @@ function CancionViewModel() {
         text: {
             first: ko.observable('Inicio'),
             last: ko.observable('Fin'),
-            back: ko.observable('<'),
-            forward: ko.observable('>')
+            back: ko.observable('«'),
+            forward: ko.observable('»')
         }
     }
 
