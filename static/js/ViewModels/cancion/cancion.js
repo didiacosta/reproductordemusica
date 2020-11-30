@@ -68,6 +68,9 @@ function CancionViewModel() {
 		self.consultar(1);
 		return true;
 	}
+	self.agregar = function () {
+		alert('agregando registro de cancion...');
+	}
 
 }
 

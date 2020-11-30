@@ -1,6 +1,7 @@
 function AlbumViewModel() {
 	var self = this;
 	self.listado = ko.observableArray([]);
+	self.listadoDeArtistas = ko.observableArray([]);
 	self.mensaje = ko.observable('');
 
 	 self.paginacion = {
@@ -26,6 +27,13 @@ function AlbumViewModel() {
         self.paginacion.pagina_actual(pagina);
         self.paginacion.total(data.count);       
         self.paginacion.cantidad_por_paginas(resultadosPorPagina);
+    }
+
+    self.albumVO = {
+    	id: ko.observable(0),
+    	nombre: ko.observable('').extend({ required: { message: ' Digite el nombre del album.' } }),
+    	caratula: ko.observable('').extend({ required: { message: ' Debe cargar la imagen de la caratula.' } }),
+    	artista_id: ko.observable(0).extend({ required: { message: ' Seleccione el artista.' } })
     }
 
 	self.consultar = function(pagina){
@@ -68,8 +76,59 @@ function AlbumViewModel() {
 		self.consultar(1);
 		return true;
 	}
+	self.agregar = function () {
+		//alert('agregando registro del album...');
+		$('#nuevoAlbum').modal('show');
+		self.llenarArtista();
+	}
+
+	self.llenarArtista = function () {
+		path = path_principal + '/api/artista/?format=json';
+		parameter = {
+		 	sin_paginacion: 1
+	 	}
+		 RequestGet(function (datos, success, mensage) {
+		 	if (success == 'ok' && datos!=null && datos.length > 0) {	
+		 		self.listadoDeArtistas(agregarOpcionesObservable(datos));
+		 	} else {
+		 		self.listadoDeArtistas([]);
+		 	}
+		 	cerrarLoading();
+		 },path, parameter,undefined, false);
+		 
+	}
+
+	self.guardar_album = function () {
+		if (AlbumViewModel.errores_album().length == 0) {
+			if (self.albumVO.id() == 0) {
+				// voy a crear un album
+				var parametros={
+					callback:function(datos, success, mensaje){
+
+						if (success=='ok') {
+							$('#nuevoAlbum').modal('hide');
+							self.consultar(1);
+						}else{
+							 mensajeError(mensaje);
+						}
+					}, //funcion para recibir la respuesta 
+					url:path_principal+'/api/album/',//url api
+					parametros:self.albumVO,
+					alerta:true,
+					metodo: 'POST'
+				};
+				RequestFormData(parametros);
+			}else {
+				// voy a modificar un album
+			}
+
+		}else {
+			AlbumViewModel.errores_album.showAllMessages();
+		}
+	}
 
 }
 
 var album = new AlbumViewModel();
+AlbumViewModel.errores_album = ko.validation.group(album.albumVO);
 ko.applyBindings(album);

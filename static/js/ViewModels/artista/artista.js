@@ -69,6 +69,10 @@ function ArtistaViewModel() {
 		return true;
 	}
 
+	self.agregar = function () {
+		alert('agregando registro de artista...');
+	}
+
 }
 
 var artista = new ArtistaViewModel();
