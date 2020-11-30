@@ -314,7 +314,7 @@ function RequestFormData(parametros) {
         processData: false,
         cache: false,
         dataType: 'json',
-        headers: { 'Authorization': 'Bearer ' + token },
+       // headers: { 'Authorization': 'Bearer ' + token },
         beforeSend: function(xhr) {
             $('#progressbar').show();
         },
