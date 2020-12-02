@@ -18,7 +18,12 @@ function AlbumViewModel() {
             forward: ko.observable('»')
         }
     }
-
+     self.limpiar=function(){        
+		self.albumVO.id(0);
+		self.albumVO.nombre('');
+		self.albumVO.caratula('');
+		self.albumVO.artista_id('');
+     }
     self.paginacion.pagina_actual.subscribe(function (pagina) {    
        self.consultar(pagina);
     });
@@ -77,11 +82,20 @@ function AlbumViewModel() {
 		return true;
 	}
 	self.agregar = function () {
-		//alert('agregando registro del album...');
+		//alert('agregando registro del album...');		
 		$('#nuevoAlbum').modal('show');
 		self.llenarArtista();
 	}
-
+	self.cargar = function () {
+		//alert('agregando registro del album...');		
+		$('#nuevoAlbum').modal('show');
+		self.albumVO = {
+			id: self.albumVO.id,
+			nombre: self.albumVO.nombre,
+			caratula: self.albumVO.caratula,
+			artista_id: self.albumVO.artista_id,
+		}		
+	}
 	self.llenarArtista = function () {
 		path = path_principal + '/api/artista/?format=json';
 		parameter = {
@@ -117,9 +131,26 @@ function AlbumViewModel() {
 					alerta:true,
 					metodo: 'POST'
 				};
-				RequestFormData(parametros);
+				RequestFormData(parametros);	
+				self.limpiar();			
 			}else {
-				// voy a modificar un album
+				var parametros={     
+					metodo:'PUT',                
+				   	callback:function(datos, estado, mensaje){
+					if (estado=='ok') {
+					  self.filtro("");
+					  self.consultar(1);
+					  $('#nuevoAlbum').modal('hide');
+					  self.limpiar();
+					}  
+
+				   },//funcion para recibir la respuesta 
+				   url:path_principal+'/api/album/'+self.albumVO.id()+'/',
+				   parametros:self.albumVO                      
+			  };
+
+			  RequestFormData(parametros);
+				self.limpiar();							
 			}
 
 		}else {
@@ -127,8 +158,59 @@ function AlbumViewModel() {
 		}
 	}
 
-}
+	self.editar_album = function (obj) {
+		self.llenarArtista();
+		path =path_principal+'/api/album/'+obj.id+'/?format=json';
+		RequestGet(function (results,count) {           		
+			self.albumVO.id(results.id);
+			self.albumVO.nombre(results.nombre);
+			self.albumVO.caratula(results.caratula);         			
+			self.albumVO.artista_id(results.artista_id);         						   			
+			$('#nuevoAlbum').modal('show');
+		}, path, parameter);
+	}	
+
+
+    self.eliminar_album = function () {
+
+		var lista_id=[];
+		lista_id.push({id:self.albumVO.id});
+		// var count=0;
+		// ko.utils.arrayForEach(self.listado(), function(d) {
+
+		// 	   if(d.eliminado()==true){
+		// 		   count=1;
+		// 		  lista_id.push({
+		// 			   id:d.id
+		// 		  })
+		// 	   }
+		// });
+
+		// if(count==0){
+
+		// 	 $.confirm({
+		// 	   title:'Informativo',
+		// 	   content: '<h4><i class="text-info fa fa-info-circle fa-2x"></i>Seleccione un cargo para la eliminacion.<h4>',
+		// 	   cancelButton: 'Cerrar',
+		// 	   confirmButton: false
+		//    });
+
+		// }else{
+			var path =path_principal+'/album/eliminar_album/';
+			var parameter = { lista: lista_id};
+			RequestAnularOEliminar("Esta seguro que desea eliminar los cargos seleccionados?", path, parameter, function () {
+				self.consultar(1);				
+			})
+
+	}     
+   
+	   
+   }	
+
+//}
 
 var album = new AlbumViewModel();
 AlbumViewModel.errores_album = ko.validation.group(album.albumVO);
-ko.applyBindings(album);
+ko.applyBindings(album,document.getElementById('add'));
+ko.applyBindings(album,document.getElementById('actions'));
+ko.applyBindings(album,document.getElementById('nuevoAlbum'));

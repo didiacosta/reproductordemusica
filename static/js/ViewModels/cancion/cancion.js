@@ -2,7 +2,7 @@ function CancionViewModel() {
 	var self = this;
 	self.listado = ko.observableArray([]);
 	self.mensaje = ko.observable('');
-
+	self.listadoDeAlbums = ko.observableArray([]);
 	 self.paginacion = {
         pagina_actual: ko.observable(1),
         total: ko.observable(0),
@@ -18,7 +18,13 @@ function CancionViewModel() {
         }
     }
 
-    self.paginacion.pagina_actual.subscribe(function (pagina) {    
+    self.cancionVO = {
+    	id: ko.observable(0),
+    	nombre: ko.observable('').extend({ required: { message: ' Digite el nombre del album.' } }),
+    	archivo: ko.observable('').extend({ required: { message: ' Debe cargar la canción del album.' } }),
+    	album_id: ko.observable(0).extend({ required: { message: ' Seleccione el cancion.' } })
+    }	
+	self.paginacion.pagina_actual.subscribe(function (pagina) {    
        self.consultar(pagina);
     });
 
@@ -69,10 +75,90 @@ function CancionViewModel() {
 		return true;
 	}
 	self.agregar = function () {
-		alert('agregando registro de cancion...');
+		//alert('agregando registro del album...');		
+		$('#nuevoCancion').modal('show');
+		self.llenarAlbum();
 	}
+
+	self.llenarAlbum = function () {
+		path = path_principal + '/api/album/?format=json';
+		parameter = {
+		 	sin_paginacion: 1
+	 	}
+		 RequestGet(function (datos, success, mensage) {
+		 	if (success == 'ok' && datos!=null && datos.length > 0) {	
+		 		self.listadoDeAlbums(agregarOpcionesObservable(datos));
+		 	} else {
+		 		self.listadoDeAlbums([]);
+		 	}
+		 	cerrarLoading();
+		 },path, parameter,undefined, false);
+		 
+	}
+
+	self.guardar_cancion = function () {
+		if (CancionViewModel.errores_cancion().length == 0) {
+			if (self.cancionVO.id() == 0) {
+				// voy a crear un cancion
+				var parametros={
+					callback:function(datos, success, mensaje){
+
+						if (success=='ok') {
+							$('#nuevoCancion').modal('hide');
+							self.consultar(1);
+						}else{
+							 mensajeError(mensaje);
+						}
+					}, //funcion para recibir la respuesta 
+					url:path_principal+'/api/cancion/',//url api
+					parametros:self.cancionVO,
+					alerta:true,
+					metodo: 'POST'
+				};
+				console.log(parametros);
+				RequestFormData(parametros);				
+			}else {
+				var parametros={     
+					metodo:'PUT',                
+				   	callback:function(datos, estado, mensaje){
+					if (estado=='ok') {
+					  self.filtro("");
+					  self.consultar(1);
+					  $('#nuevoCancion').modal('hide');
+					  self.limpiar();
+					}  
+
+				   },//funcion para recibir la respuesta 
+				   url:path_principal+'/api/cancion/'+self.cancionVO.id()+'/',
+				   parametros:self.cancionVO,
+				   alerta:true                      
+			  };
+
+			  RequestFormData(parametros);
+				self.limpiar();					
+			}
+
+		}else {
+			CancionViewModel.errores_cancion.showAllMessages();
+		}
+	}
+
+	self.editar_cancion = function (obj) {	
+		self.llenarAlbum();	
+		path =path_principal+'/api/cancion/'+obj.id+'/?format=json';
+		RequestGet(function (results,count) {           		
+			self.cancionVO.id(results.id);
+			self.cancionVO.nombre(results.nombre);
+			self.cancionVO.archivo(results.archivo);         						      						   			
+			self.cancionVO.album_id(results.album_id);         						      						   			
+			$('#nuevoCancion').modal('show');
+		}, path, parameter);		
+	}	
 
 }
 
 var cancion = new CancionViewModel();
-ko.applyBindings(cancion);
+CancionViewModel.errores_cancion = ko.validation.group(cancion.cancionVO);
+ko.applyBindings(cancion,document.getElementById('add'));
+ko.applyBindings(cancion,document.getElementById('actions'));
+ko.applyBindings(cancion,document.getElementById('nuevoCancion'));
