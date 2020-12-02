@@ -41,7 +41,7 @@
             </div>
             <div class="card-body">
             	<div data-bind="html: mensaje"></div>
-            	<div class="col-lg-12" data-bind="visible:(listado()!=null && listado().length > 0)">
+            	<div class="col-lg-12" data-bind="visible:(listado()!=null && listado().length > 0)" id="actions">
             		<div class="table-responsive ">
             			<table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
             				<thead class="bg-danger text-white text-center">
@@ -52,6 +52,7 @@
             						<th class="font-weight-bold">Nombre Cancion</th>									
 									<th class="font-weight-bold">Caratula</th>
 									<th class="font-weight-bold">Cancion</th>
+									<th class="font-weight-bold"> </th>
             					</tr>
             				</thead>
             				<tbody>
@@ -67,6 +68,18 @@
 												<p>Tu navegador no implementa el elemento audio</p>
 											</audio>
 										</td>
+										<td class="font-weight-bold" style="max-width: 200px;width: 200px;min-width: 200px;">
+											<form action="." method="post" enctype="multipart/form-data" style="margin: 10px;float:left">
+												{% csrf_token %}
+												<button type="button" class="btn btn-danger" data-bind="click:  $root.eliminar_album"><i class="fas fa-trash-alt fa-1x"></i></button>                    
+												</form>
+												<form action="." method="post" enctype="multipart/form-data" style="margin: 10px;float:left">                              
+												{% csrf_token %}
+												<button type="button" class="btn" data-bind="click: $root.editar_album" style="background: #486dda; color: white;">
+												<i class="fas fa-edit fa-1x"></i>
+												</button>                    
+											</form>                                                        
+										</td> 																				
             						</tr>
             					<!--/ko-->
             				</tbody>
@@ -89,9 +102,50 @@
 		</div>
 	</div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="nuevoCancion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Crear nueva cancion</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="." method="post" enctype="multipart/form-data" style="max-width: 100%;padding: 19px;">
+          {% csrf_token %}
+			<div class="form-group row">
+
+				<input type="text" class="form-control form-control-user" id="nombre"
+				placeholder="Nombre" data-bind="value: cancionVO.nombre">
+
+			</div>
+			<div class="form-group row">
+
+				<select id="album" class="form-control form-control-user" data-bind="value: cancionVO.album_id">  <option value="0">Seleccione...</option>
+				<!--ko foreach: { data:listadoDeAlbums , as:'item'}-->        
+					<option data-bind="value:item.id, text:item.nombre"></option>
+				<!-- /ko -->
+				</select>
+
+			</div>
+			<div class="form-group">          
+				<input type="file" class="note-image-input" id="archivo" name="archivo" 
+				data-bind="fileData:{value:cancionVO.archivo,allowedFileExtensions: ['mp3']}"/>                                
+			</div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bind="click: guardar_cancion">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock contenido %}
 
 {% block imports %}
+	<script type="text/javascript" src='{% static "js/plugins/fileInput/fileinput.js" %}'></script>
 	<script type="text/javascript" src='{% static "js/ViewModels/cancion/cancion.js" %}'></script>
 	<script type="text/javascript">
 		$(document).ready(function () {

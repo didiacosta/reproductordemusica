@@ -1,0 +1,62 @@
+ul.pagination {
+	display: inline-block;
+	padding: 0;
+	margin: 0;
+}
+
+ul.pagination li {display: inline;}
+
+ul.pagination li a {
+	color: black;
+	float: left;
+	padding: 8px 16px;
+	text-decoration: none;
+}
+
+ul.pagination li a.active {
+	background-color: #4CAF50;
+	color: white;
+}
+.pop-imagen{
+	position: absolute;            
+	top: 0;                    
+	display: flex;
+	justify-content: center;
+	align-items: center;               
+}
+.kv-fileinput-caption{
+	display:none;
+}
+.fileinput-remove-button{
+	display: none;
+}
+.fileinput-cancel-button{
+	display:none;
+}
+.progress{
+	display: none;
+}
+.jconfirm-scrollpane{
+	position: absolute;            
+	top: 0;                    
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 3;            
+	width: 100%;
+	text-align: center;
+}
+.jconfirm-box{
+	background: white;
+	width: 250px;
+	padding: 10px; 
+	box-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.15);                 
+}
+.jconfirm-box-container{
+	margin-left: 50%;
+	margin-right: 50%;            
+}
+.btn.btn-default{
+	background: #486dda;
+	color: white;
+}

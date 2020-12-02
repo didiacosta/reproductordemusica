@@ -14,6 +14,24 @@ function mensajeExitoso(mensaje, titulo) {
         cancelButton: 'Cerrar',
         confirmButton: false
     });
+    // if ( $("#nombre").length){
+    //     document.getElementById("nombre").value = null;
+    // }
+    // if ( $("#artista").length){
+    //     document.getElementById("artista").value = null;
+    // }
+    // if ( $("#caratula").length){
+    //     document.getElementById("caratula").value = null;
+    // }
+    // if ( $("#archivo").length){
+    //     document.getElementById("archivo").value = null;
+    // }
+    // if ( $("#nombreArtistico").length){
+    //     document.getElementById("nombreArtistico").value = null;
+    // }
+    // if ( $("#album").length){
+    //     document.getElementById("album").value = null;
+    // }    
 }
 
 function mensajeError(mensaje, titulo) {
@@ -324,6 +342,7 @@ function RequestFormData(parametros) {
                 parametros.callback(response.data, response.success || response.status, response.message);
                 if (parametros.alerta)
                     mensajeExitoso(response.message);
+                    
             } else {
                 parametros.callback(response.data, response.success || response.status, response.message);
                 if (parametros.alerta)

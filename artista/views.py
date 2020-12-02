@@ -74,10 +74,9 @@ class ArtistaViewSet(viewsets.ModelViewSet):
 				serializer = ArtistaSerializer(data = request.data, context ={'request':request})
 				if serializer.is_valid():
 					serializer.save()
-
 					return Response({'message':'El registro ha sido guardado exitosamente','success':'ok',
 						'data':serializer.data},status=status.HTTP_201_CREATED)
-				else:
+				else:					
 					return Response({'message':'datos requeridos no fueron recibidos','success':'fail',
 					'data':''},status=status.HTTP_400_BAD_REQUEST)
 

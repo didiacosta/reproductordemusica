@@ -6,6 +6,8 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import Q
+import json
+from django.db import transaction,connection
 from django.contrib.auth.decorators import login_required
 
 #serializers:
@@ -89,7 +91,7 @@ class AlbumViewSet(viewsets.ModelViewSet):
 
 					return Response({'message':'El registro ha sido guardado exitosamente','success':'ok',
 						'data':serializer.data},status=status.HTTP_201_CREATED)
-				else:
+				else:					
 					return Response({'message':'datos requeridos no fueron recibidos','success':'fail',
 					'data':''},status=status.HTTP_400_BAD_REQUEST)
 
@@ -130,3 +132,31 @@ class AlbumViewSet(viewsets.ModelViewSet):
 @login_required
 def home_view(request):
 	return render(request, 'album/home.html', {})	
+
+
+
+@transaction.atomic
+def eliminar_album(request):
+
+	sid = transaction.savepoint()
+	try:
+		lista=request.POST['_content']
+		respuesta= json.loads(lista)
+		print (respuesta)
+		for item in respuesta['lista']:
+			Album.objects.filter(id=item['id']).delete()
+
+			#logs_model=Logs(usuario_id=request.user.usuario.id,accion=Acciones.accion_borrar,nombre_modelo='administrador_foto.fotos_proyecto',id_manipulado=item['id'])
+			#logs_model.save()
+
+		transaction.savepoint_commit(sid)
+		return Response({'message':'El registro se ha eliminado correctamente','success':'ok',
+				'data':''},status=status.HTTP_201_CREATED)
+		
+	except Exception as e:
+		return Response({'message':'No es posible eliminar el registro, se esta utilizando en otra seccion del sistema','success':'error','data':''},status=status.HTTP_404_NOT_FOUND)	
+		
+	except:
+		transaction.savepoint_rollback(sid)
+		return Response({'message':'Se presentaron errores al procesar la solicitud','success':'error',
+			'data':''})	
