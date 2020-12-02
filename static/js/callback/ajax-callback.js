@@ -216,7 +216,8 @@ function Request(parametros) {
         type: parametros.metodo,
         //contentType: "application/json; charset=utf-8",
         dataType: "json",
-        headers: { 'Authorization': 'Bearer ' + token },
+        //headers: { 'Authorization': 'Bearer ' + token },
+        headers: { 'X-CSRFToken': getCookie('csrftoken') },
 
         beforeSend: function(xhr) {
             $('#loading').show();
@@ -275,6 +276,7 @@ function RequestFormData(parametros) {
     var forData = new FormData();
     var parameter = parametros.parametros;
     forData.append('csrfmiddlewaretoken', getCookie('csrftoken'));
+    forData.append('X-CSRFToken', getCookie('csrftoken'));
     forData.append('_method', parametros.metodo);
     for (var key in parameter) {
 
@@ -332,7 +334,8 @@ function RequestFormData(parametros) {
         processData: false,
         cache: false,
         dataType: 'json',
-       // headers: { 'Authorization': 'Bearer ' + token },
+        //headers: { 'Authorization': 'Bearer ' + token },
+        headers: { 'X-CSRFToken': getCookie('csrftoken') },
         beforeSend: function(xhr) {
             $('#progressbar').show();
         },

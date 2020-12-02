@@ -39,16 +39,13 @@
             							<td data-bind="text: item.nombre" style="color:black"></td>
 										<td data-bind="text: item.nombreArtistico" style="color:black"></td>
 										<td class="font-weight-bold" style="max-width: 200px;width: 200px;min-width: 200px;">
-											<form action="." method="post" enctype="multipart/form-data" style="margin: 10px;float:left">
-												{% csrf_token %}
 												<button type="button" class="btn btn-danger" data-bind="click:  $root.eliminar_artista"><i class="fas fa-trash-alt fa-1x"></i></button>                    
-												</form>
-												<form action="." method="post" enctype="multipart/form-data" style="margin: 10px;float:left">                              
-												{% csrf_token %}
+
+
 												<button type="button" class="btn" data-bind="click: $root.editar_artista" style="background: #486dda; color: white;">
 												<i class="fas fa-edit fa-1x"></i>
 												</button>                    
-											</form>                                                        
+                                                       
 										</td>  										
             						</tr>
             					<!--/ko-->
@@ -84,7 +81,7 @@
 		  </button>
 		</div>
 		<div class="modal-body">
-		  <form action="." method="post" enctype="multipart/form-data" style="max-width: 100%;padding: 19px;">
+		  <form action="." enctype="multipart/form-data" style="max-width: 100%;padding: 19px;">
 			{% csrf_token %}
 		  <div class="form-group row">
 			  <input type="text" class="form-control form-control-user" id="nombre"

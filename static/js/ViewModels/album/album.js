@@ -171,10 +171,10 @@ function AlbumViewModel() {
 	}	
 
 
-    self.eliminar_album = function () {
+    self.eliminar_album = function (obj) {
 
-		var lista_id=[];
-		lista_id.push({id:self.albumVO.id});
+		//var lista_id=[];
+		//lista_id.push({id:self.albumVO.id});
 		// var count=0;
 		// ko.utils.arrayForEach(self.listado(), function(d) {
 
@@ -196,8 +196,9 @@ function AlbumViewModel() {
 		//    });
 
 		// }else{
-			var path =path_principal+'/album/eliminar_album/';
-			var parameter = { lista: lista_id};
+			var path =path_principal+'/api/album/'+obj.id+'/';
+			//var parameter = { lista: lista_id};
+			var parameter = {}
 			RequestAnularOEliminar("Esta seguro que desea eliminar los cargos seleccionados?", path, parameter, function () {
 				self.consultar(1);				
 			})
