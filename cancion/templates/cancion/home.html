@@ -71,11 +71,11 @@
 										<td class="font-weight-bold" style="max-width: 200px;width: 200px;min-width: 200px;">
 											<form action="." method="post" enctype="multipart/form-data" style="margin: 10px;float:left">
 												{% csrf_token %}
-												<button type="button" class="btn btn-danger" data-bind="click:  $root.eliminar_album"><i class="fas fa-trash-alt fa-1x"></i></button>                    
+												<button type="button" class="btn btn-danger" data-bind="click:  $root.eliminar_cancion"><i class="fas fa-trash-alt fa-1x"></i></button>                    
 												</form>
 												<form action="." method="post" enctype="multipart/form-data" style="margin: 10px;float:left">                              
 												{% csrf_token %}
-												<button type="button" class="btn" data-bind="click: $root.editar_album" style="background: #486dda; color: white;">
+												<button type="button" class="btn" data-bind="click: $root.editar_cancion" style="background: #486dda; color: white;">
 												<i class="fas fa-edit fa-1x"></i>
 												</button>                    
 											</form>                                                        

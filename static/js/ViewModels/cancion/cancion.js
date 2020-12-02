@@ -22,7 +22,7 @@ function CancionViewModel() {
     	id: ko.observable(0),
     	nombre: ko.observable('').extend({ required: { message: ' Digite el nombre del album.' } }),
     	archivo: ko.observable('').extend({ required: { message: ' Debe cargar la canción del album.' } }),
-    	album_id: ko.observable(0).extend({ required: { message: ' Seleccione el artista.' } })
+    	album_id: ko.observable(0).extend({ required: { message: ' Seleccione el cancion.' } })
     }	
 	self.paginacion.pagina_actual.subscribe(function (pagina) {    
        self.consultar(pagina);
@@ -118,13 +118,42 @@ function CancionViewModel() {
 				console.log(parametros);
 				RequestFormData(parametros);				
 			}else {
-				// voy a modificar un cancion
+				var parametros={     
+					metodo:'PUT',                
+				   	callback:function(datos, estado, mensaje){
+					if (estado=='ok') {
+					  self.filtro("");
+					  self.consultar(1);
+					  $('#nuevoCancion').modal('hide');
+					  self.limpiar();
+					}  
+
+				   },//funcion para recibir la respuesta 
+				   url:path_principal+'/api/cancion/'+self.cancionVO.id()+'/',
+				   parametros:self.cancionVO,
+				   alerta:true                      
+			  };
+
+			  RequestFormData(parametros);
+				self.limpiar();					
 			}
 
 		}else {
 			CancionViewModel.errores_cancion.showAllMessages();
 		}
 	}
+
+	self.editar_cancion = function (obj) {	
+		self.llenarAlbum();	
+		path =path_principal+'/api/cancion/'+obj.id+'/?format=json';
+		RequestGet(function (results,count) {           		
+			self.cancionVO.id(results.id);
+			self.cancionVO.nombre(results.nombre);
+			self.cancionVO.archivo(results.archivo);         						      						   			
+			self.cancionVO.album_id(results.album_id);         						      						   			
+			$('#nuevoCancion').modal('show');
+		}, path, parameter);		
+	}	
 
 }
 

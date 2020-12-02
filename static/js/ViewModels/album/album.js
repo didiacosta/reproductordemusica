@@ -199,8 +199,7 @@ function AlbumViewModel() {
 			var path =path_principal+'/album/eliminar_album/';
 			var parameter = { lista: lista_id};
 			RequestAnularOEliminar("Esta seguro que desea eliminar los cargos seleccionados?", path, parameter, function () {
-				self.consultar(1);
-				self.checkall(false);
+				self.consultar(1);				
 			})
 
 	}     

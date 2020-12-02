@@ -105,7 +105,24 @@ function ArtistaViewModel() {
 				RequestFormData(parametros);
 				self.limpiar()				
 			}else {
-				// voy a modificar un_artista
+				var parametros={     
+					metodo:'PUT',                
+				   	callback:function(datos, estado, mensaje){
+					if (estado=='ok') {
+					  self.filtro("");
+					  self.consultar(1);
+					  $('#nuevoArtista').modal('hide');
+					  self.limpiar();
+					}  
+
+				   },//funcion para recibir la respuesta 
+				   url:path_principal+'/api/artista/'+self.artistaVO.id()+'/',
+				   parametros:self.artistaVO,
+				   alerta:true                      
+			  };
+
+			  RequestFormData(parametros);
+				self.limpiar();					
 			}
 
 		}else {
@@ -113,8 +130,14 @@ function ArtistaViewModel() {
 		}
 	}
 
-	self.editar_artista = function () {
-		alert('editar');
+	self.editar_artista = function (obj) {		
+		path =path_principal+'/api/artista/'+obj.id+'/?format=json';
+		RequestGet(function (results,count) {           		
+			self.artistaVO.id(results.id);
+			self.artistaVO.nombre(results.nombre);
+			self.artistaVO.nombreArtistico(results.nombreArtistico);         						      						   			
+			$('#nuevoArtista').modal('show');
+		}, path, parameter);		
 	}
 
 }
