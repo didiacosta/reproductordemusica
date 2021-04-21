@@ -14,8 +14,10 @@ from .serializers import ArtistaSerializer
 #models:
 from .models import Artista
 
+from rest_framework import permissions
 
 class ArtistaViewSet(viewsets.ModelViewSet):
+	#permission_classes = [permissions.AllowAny]
 	model = Artista
 	queryset = Artista.objects.all()
 	serializer_class = ArtistaSerializer
